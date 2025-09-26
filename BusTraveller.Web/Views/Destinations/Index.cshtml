@@ -1,0 +1,35 @@
+﻿@model IEnumerable<BusTraveller.Web.Models.Destination>
+
+<section class="section__container destination__container" id="about">
+    <h2 class="section__header">Popular Destination</h2>
+    <p class="section__description">
+        Discover the Most Loved Destination Around the Globe
+    </p>
+    <a class="btn btn-primary btn-sm mt-3 mb-3 float-start" asp-action="Create">
+        <i class="ri-add-line"></i> Create
+    </a>
+    <div class="destination__grid">
+        @foreach (var item in Model)
+        {
+            <div class="destination__card">
+                <img src="@item.ImageUrl" alt="destination" />
+                <div class="destination__card__details">
+                    <div>
+                        <h4>@item.Title</h4>
+                        <p>@item.Location</p>
+                    </div>
+                    <div class="destination__ratings">
+                        <span><i class="ri-star-fill"></i></span>
+                        @item.Rating
+                    </div>
+                </div>
+                <div class="mt-2">
+                   <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                   <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </div>
+            </div>
+        }
+        
+        
+    </div>
+</section>
