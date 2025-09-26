@@ -2,13 +2,21 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
+# Copy everything
 COPY . .
-RUN dotnet publish -c Release -o /app
+
+# Publish the project explicitly
+RUN dotnet publish BusTravellerGit-1.csproj -c Release -o /app
 
 # Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
-COPY --from=build /app .
-ENV ASPNETCORE_URLS=http://+:10000
-ENTRYPOINT ["dotnet", "BusTravellerGit.dll"]
 
+# Copy published output
+COPY --from=build /app .
+
+# Bind to Render port
+ENV ASPNETCORE_URLS=http://+:10000
+
+# Run the correct DLL
+ENTRYPOINT ["dotnet", "BusTravellerGit-1.dll"]
